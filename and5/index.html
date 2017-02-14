@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+    <div ng-controller="idxCtrl">
+    	<table>
+    		<thead>
+    			<tr>
+    				<td>名称</td>
+    				<td>单价</td>
+    				<td>数量</td>
+    			</tr>
+    		</thead>
+    		<tbody>
+    			<tr ng-repeat="item in item">
+    				<td>{{item.name}}</td>
+    				<td>{{item.money}}</td>
+    				<td><button ng-click="del($index)">-</button><input type="text" ng-model="item.count"><button ng-click="add($index)">+</button></td>
+    			</tr>
+    		</tbody>
+    		<tfoot>
+    			<tr>
+    				<td>数量：<span>{{num()}}</span></td>
+    				<td>总价：<span>{{numall()}}</span></td>
+    			</tr>
+    		</tfoot>
+    	</table>
+    </div>
+	<script src="angular.min.js"></script>
+	<script>
+		angular.module("myApp",[])
+		       .controller("idxCtrl",["$scope",function($scope){
+                   var item=[
+                        {
+                        	name:"苹果",
+                        	money:"30",
+                        	count:1
+                        },
+                        {
+                        	name:"桔子",
+                        	money:"20",
+                        	count:2
+                        },
+                        {
+                        	name:"香蕉",
+                        	money:"50",
+                        	count:1
+                        },
+                        {
+                        	name:"桃",
+                        	money:"40",
+                        	count:1
+                        }
+                   ]
+                   $scope.item=item;
+                   $scope.add=function($index){
+                   	   $scope.item[$index].count++;
+                   }
+                   $scope.del=function($index){
+                   	   if($scope.item[$index].count>1){
+                   	   	   $scope.item[$index].count--;
+                   	   }else{
+                   	   	   $scope.item[$index].count=1;
+                   	   }
+                   }
+                   $scope.num=function(){
+                   	    var nums=0;
+                   	    for(var i=0;i<$scope.item.length;i++){
+                   	    	nums+=$scope.item[i].count;
+                   	    }
+                   	    return nums;
+                   }
+                   $scope.numall=function(){
+                   	   var numalls=0;
+                   	   for(var i=0;i<$scope.item.length;i++){
+                   	   	   numalls+=$scope.item[i].count*$scope.item[i].money;
+                   	   }
+                   	   return numalls;
+                   }
+		       }])
+	</script>
+</body>
+</html>
